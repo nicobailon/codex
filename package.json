@@ -1,10 +1,71 @@
 {
-  "description": "Tools for repo-wide maintenance.",
+  "name": "openai-codex-mcp",
+  "version": "1.0.0",
+  "description": "OpenAI Codex CLI and MCP Server",
+  "type": "module",
+  "bin": {
+    "openai-codex": "dist/entrypoints/cli.js"
+  },
+  "main": "dist/entrypoints/cli.js",
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "scripts": {
+    "build": "node build.mjs",
+    "start": "node dist/entrypoints/cli.js",
+    "start:cli": "node dist/entrypoints/cli.js",
+    "start:mcp": "node dist/entrypoints/cli.js mcp serve",
+    "dev:mcp": "node dev-server.js --port 3001",
+    "dev:mcp:debug": "node --inspect dev-server.js --port 3001",
+    "lint": "eslint . --ext .ts,.tsx --fix",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:integration": "vitest run tests/integration",
+    "test:unit": "vitest run tests/unit",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run clean && npm run lint && npm run test && npm run build",
     "format": "prettier --check *.json *.md .github/workflows/*.yml",
-    "format:fix": "prettier --write *.json *.md .github/workflows/*.yml"
+    "format:fix": "prettier --write *.json *.md .github/workflows/*.yml",
+    "permissions:list": "node dist/entrypoints/cli.js mcp permissions --list",
+    "permissions:clear": "node dist/entrypoints/cli.js mcp permissions --clear"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@inkjs/ui": "^2.0.0",
+    "@modelcontextprotocol/sdk": "^1.9.0",
+    "commander": "^13.1.0",
+    "ink": "^5.2.0",
+    "react": "^18.3.1",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
-    "prettier": "^3.5.3"
-  }
+    "@types/node": "^22.14.1",
+    "@types/react": "^19.1.2",
+    "@types/ws": "^8.18.1",
+    "@typescript-eslint/eslint-plugin": "^8.30.1",
+    "@typescript-eslint/parser": "^8.30.1",
+    "esbuild": "^0.25.2",
+    "ts-node": "^10.9.1",
+    "esbuild-node-externals": "^1.18.0",
+    "eslint": "^9.24.0",
+    "eslint-config-prettier": "^10.1.2",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "pino": "^9.6.0",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.1"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "openai",
+    "codex",
+    "ai",
+    "cli"
+  ],
+  "license": "MIT"
 }
